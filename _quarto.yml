@@ -1,10 +1,9 @@
 website:
-  title: "Rhyangoozh.github.io"
+  title: "Rhyan Goozh"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
 
 format:
   html:
