@@ -1,12 +1,24 @@
 ---
-title: "Rhyangoozh.com"
+title: "About Me"
+1image: Goozh.Rhyan Digital Photo.jpg
+2toc: false
+about: 
+ template: jolla
+ image-shape: round
+ image-width: 17em
+ links:
+  - text: LinkedIn
+    href: https://www.linkedin.com/in/rhyan-goozh
+  - text: GitHub
+    href: https://github.com/Rhyangoozh
+  - text: Email
+    href: mailto:regx2023@mymail.pomona.edu
 ---
 
-This is a Quarto website.
+::: {style="text-align: center;"}
+<img src="Goozh.Rhyan Digital Photo.jpg" alt="Rhyan Goozh" style="width: 17em; height: auto; border-radius: 50%;"/>
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+<h1>Rhyan Goozh</h1>
+:::
 
-```{r}
-1 + 1
-```
-
+Welcome to my website! I am a student at Pomona College ('27) majoring in Economics and minoring in Data Science. At Pomona I am an Associate Consultant for Pomona Consulting Group and the Finance Director for Party With a Purpose Dance Marathon Club. I also play on the Pomona Woman's Varsity Lacrosse team.
