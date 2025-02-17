@@ -3,9 +3,9 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: Home
-      - href: about.qmd
-        text: about
+        text: About Me
+      - href: dataviz.qmd
+        text: Data Viz
 
 format:
   html:
