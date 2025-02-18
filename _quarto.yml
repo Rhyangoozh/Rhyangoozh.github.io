@@ -3,9 +3,13 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: About Me
-      - href: dataviz.qmd
-        text: Data Viz
+        text: About Me        
+      - text: "Data Viz"        
+        menu: 
+          - href: FBICrimeData.html
+            text: "FBI Crime Reporting Analysis"
+          - href: Valentinespending.html
+            text: "Valentine's Day Consumer Spending Analysis"
 
 format:
   html:

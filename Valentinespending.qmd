@@ -1,0 +1,52 @@
+---
+title: "Valentines Day Consumer Data"
+description: |
+  Analysis on how consumers celebrate from TidyTuesday
+author: Rhyan Goozh
+date: Febuary 18, 2025
+format: html
+execute: 
+  warning: false
+  message: false
+---
+
+In this project, I analyze consumer spending on Valentines Day using the Tidy Tuesday Valentine's Day survey data from the National Retail Federation (NRF) Valentine's Day Data Center. The data set provides detailed information on how consumers celebrate Valentine's Day annually for over a decade (2010 - 2022) and uses interactive charts to explore a demographic break down on both spending and gift type. This data set is ideal for exploring and understanding relationships in consumer spending.
+
+```{r}
+gifts_age <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-02-13/gifts_age.csv')
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(tidytuesdayR)
+
+ggplot(gifts_age, aes(x = Age, y = SpendingCelebrating, group = 1)) +
+  geom_point(color = "blue", size = 3) +  
+  geom_line(color = "red", linewidth = 1) + 
+  labs(
+    title = "Percentage of People Spending Money on Valentine's Day by Age",
+    x = "Age Group",
+    y = "Percentage Spending (%)"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Here I created a scatterplot to visualizes the percentage of people spending money on Valentine's Day across different age groups. The x-axis represents various age groups, while the y-axis indicates the percentage of individuals in each group who report spending money on the holiday. A red line is used to connect the points, highlighting the trend in spending participation across age demographics.
+
+This visualization helps identify spending habits among different generations, showing whether younger or older individuals are more likely to participate financially in Valentine's Day celebrations.
+
+**Data Source:**
+
+<https://www.kaggle.com/datasets/infinator/happy-valentines-day-2022>
+
+**Author:** TidyTuesday Project
+
+This data was sourced from the TidyTuesday project, which provides weekly data challenges for the R community. Specifically, the dataset focuses on consumer spending on valentine's Day:
+
+\- The dataset originates from the National Retail Federation's annual Valentine's Day surveys and last updated November 2024.
+
+\- Data spans from 2010 to 2022 and examines spending habits by age group.
+
+\- This dataset provides insights into planned spending on different types of gifts and overall spending participation.

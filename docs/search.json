@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "About Me",
+    "objectID": "Valentinespending.html",
+    "href": "Valentinespending.html",
+    "title": "Valentines Day Consumer Data",
     "section": "",
-    "text": "Rhyan Goozh\n\n\nWelcome to my website! I am a student at Pomona College (’27) majoring in Economics and minoring in Data Science. At Pomona I am an Associate Consultant for Pomona Consulting Group and the Finance Director for Party With a Purpose Dance Marathon Club. I also play on the Pomona Woman’s Varsity Lacrosse team."
+    "text": "In this project, I analyze consumer spending on Valentines Day using the Tidy Tuesday Valentine’s Day survey data from the National Retail Federation (NRF) Valentine’s Day Data Center. The data set provides detailed information on how consumers celebrate Valentine’s Day annually for over a decade (2010 - 2022) and uses interactive charts to explore a demographic break down on both spending and gift type. This data set is ideal for exploring and understanding relationships in consumer spending.\n\ngifts_age &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-02-13/gifts_age.csv')\n\n\nlibrary(tidyverse)\nlibrary(ggplot2)\nlibrary(tidytuesdayR)\n\nggplot(gifts_age, aes(x = Age, y = SpendingCelebrating, group = 1)) +\n  geom_point(color = \"blue\", size = 3) +  \n  geom_line(color = \"red\", linewidth = 1) + \n  labs(\n    title = \"Percentage of People Spending Money on Valentine's Day by Age\",\n    x = \"Age Group\",\n    y = \"Percentage Spending (%)\"\n  ) +\n  theme_minimal() +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1))\n\n\n\n\n\n\n\n\nHere I created a scatterplot to visualizes the percentage of people spending money on Valentine’s Day across different age groups. The x-axis represents various age groups, while the y-axis indicates the percentage of individuals in each group who report spending money on the holiday. A red line is used to connect the points, highlighting the trend in spending participation across age demographics.\nThis visualization helps identify spending habits among different generations, showing whether younger or older individuals are more likely to participate financially in Valentine’s Day celebrations.\nData Source:\nhttps://www.kaggle.com/datasets/infinator/happy-valentines-day-2022\nAuthor: TidyTuesday Project\nThis data was sourced from the TidyTuesday project, which provides weekly data challenges for the R community. Specifically, the dataset focuses on consumer spending on valentine’s Day:\n- The dataset originates from the National Retail Federation’s annual Valentine’s Day surveys and last updated November 2024.\n- Data spans from 2010 to 2022 and examines spending habits by age group.\n- This dataset provides insights into planned spending on different types of gifts and overall spending participation."
   },
   {
     "objectID": "about.html",
@@ -12,5 +12,19 @@
     "title": "Data Viz",
     "section": "",
     "text": "About this site\n\n2+4\n\n[1] 6"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "About Me",
+    "section": "",
+    "text": "Rhyan Goozh\n\n\nWelcome to my website! I am a student at Pomona College (’27) majoring in Economics and minoring in Data Science. At Pomona I am an Associate Consultant for Pomona Consulting Group and the Finance Director for Party With a Purpose Dance Marathon Club. I also play on the Pomona Woman’s Varsity Lacrosse team."
+  },
+  {
+    "objectID": "FBICrimeData.html",
+    "href": "FBICrimeData.html",
+    "title": "FBI Crime Data",
+    "section": "",
+    "text": "In this project, I analyze agency level crime data across all 50 states using the Tidy Tuesday Agencies From the FBI Crime Data API data set. The data set provides detailed information on law enforcement agencies across all 50 states that have submitted data to the FBI’s Uniform Crime Reporting (UCR) program and are displayed on the Crime Data Explorer (CDE). This data set is ideal for exploring trends and understanding the fluidity in crime.\n\n#install.packages(\"tidytuesdayR\")\ntuesdata &lt;- tidytuesdayR::tt_load('2025-02-18')\nagencies &lt;- tuesdata$agencies\n\n\nlibrary(tidyverse)\nlibrary(ggplot2)\nlibrary(tidytuesdayR)\n\nagencies |&gt;\n  count(state, agency_type) |&gt;\n  ggplot(aes(x = state, y = n, color = agency_type)) +\n  geom_point(size = 3) +\n  labs(\n    x = \"State\",\n    y = \"Number of Agencies\",\n    title = \"Distribution of Law Enforcement Agencies by State and Type\",\n    color = \"Agency Type\"\n  ) +\n  theme(\n    axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),\n    legend.position = \"bottom\"\n    )\n\n\n\n\n\n\n\n\nHere I created a scatterplot that visualizes the distribution of law enforcement agencies by state and agency type. The x-axis represents the states, while the y-axis displays the number of agencies in each state. Different colors represent different agency types.\nThis visualization helps identify variations in agency distribution across states and highlights trends in the presence of different law enforcement agency types. It can be useful for understanding the allocation of law enforcement resources and regional differences in agency structures.\nData Source:\nhttps://github.com/rfordatascience/tidytuesday/blob/master/data/2025/2025-02-18/agencies.csv\nAuthor: TidyTuesday Project\nThis data was sourced from the TidyTuesday project, which provides weekly data challenges for the R community. Specifically, the dataset focuses on law enforcement agencies across the U.S.:\n- The dataset was last committed on February 18, 2025.\n- It includes details on agencies that have submitted data to the FBI’s Uniform Crime Reporting (UCR) Program.\n- The dataset provides insights into agency types, geographical distribution, and NIBRS participation."
   }
 ]
