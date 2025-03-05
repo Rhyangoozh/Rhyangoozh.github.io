@@ -1,0 +1,131 @@
+---
+title: "Text Analysis"
+description: |
+  Netflix Consumer Strategy 
+author: Rhyan Goozh
+date: March 5, 2025
+format: html
+execute: 
+  warning: false
+  message: false
+---
+
+In this project, I analyzed the Netflix Movies and TV Shows dataset to explore trends and insights into potential Netflix consumer engagement strategy. This dataset, sourced from Kaggle and made available through TidyTuesday, provides information on titles, genres, release years, duration, and descriptions.
+
+```{r}
+netflix_titles <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-20/netflix_titles.csv')
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(tidytuesdayR)
+library(stringr)
+library(plotly)
+library(dplyr)
+```
+
+# Question 1: What are the most commonly produced genres on Netflix?
+
+```{r}
+# Convert listed genres to lowercase
+netflix_titles <- netflix_titles |> 
+  mutate(listed_in = str_to_lower(listed_in))
+```
+
+```{r}
+# Split genres into individual rows
+genre_trends <- netflix_titles |> 
+  separate_rows(listed_in, sep = ", ") |> 
+  count(listed_in, sort = TRUE) |> 
+  rename(primary_genre = listed_in, total_count = n)
+```
+
+```{r}
+# Keep only the top 10 genres
+top_10_genres <- genre_trends |> 
+  slice_max(total_count, n = 10)
+```
+
+```{r}
+# Bar plot with genre names on x-axis
+genre_plot <- ggplot(top_10_genres, aes(x = reorder(primary_genre, total_count), y = total_count)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +  
+  labs(
+    title = "Top 10 Most Commonly Produced Genres on Netflix",
+    x = "Genre",
+    y = "Count"
+  ) +
+  theme_minimal()
+
+print(genre_plot)
+```
+
+# Question 2: Is there a relationship between movie length and release year?
+
+```{r}
+# Convert duration to numeric values (for movies only) and exclude any shows with "season" in duration
+netflix_titles <- netflix_titles |> 
+  mutate(
+    # Extract movie duration, excluding anything that has the word 'season' in it using negative lookahead
+    movie_length = as.numeric(str_extract(duration, "^(?!.*seasons).*\\d+"))
+  )
+
+# Filter to only movies and ensure there are valid movie lengths and release years
+movie_data <- netflix_titles |> 
+  filter(
+    type == "Movie" & 
+    !is.na(movie_length) & 
+    !is.na(release_year) &
+    movie_length > 0
+  )
+
+# Check the first few rows of filtered movie data
+head(movie_data)
+
+# Scatter plot of movie length vs. release year with trend line
+length_vs_year_plot <- ggplot(movie_data, aes(x = release_year, y = movie_length)) +
+  geom_point(alpha = 0.5, color = "darkred") +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(
+    title = "Relationship Between Movie Length and Release Year",
+    x = "Release Year",
+    y = "Movie Length (minutes)"
+  )
+print(length_vs_year_plot)
+
+```
+# How many titles on Netflix use "The" in it?
+
+```{r}
+the_count <- sum(str_detect(netflix_titles[["title"]], "\\bthe\\b"))
+the_count
+```
+
+
+**Analysis on Tables/Plots:**
+
+This dataset provides insights into Netflix’s content strategy by analyzing trends in genre production and movie lengths. The findings highlight how Netflix has adapted its catalog over time based on consumer preferences and market demands. The analysis focuses on two key aspects: the most commonly produced genres and the relationship between movie lengths and release years.
+
+My first bar chart displays the top 10 most frequently produced genres on Netflix, with Drama, Comedy, and International Movies and TV shows leading. These genres dominate the platform’s library, suggesting that Netflix has prioritized them in response to audience demand. Netflix’s heavy investment in Drama indicates a strategic response to consumer preference for emotionally engaging narratives, while Comedy’s strong presence suggests sustained demand for lighthearted entertainment. The high production of International entertainment reflects the growing interest in informative, worldly-based content, likely driven by increased global accessibility, audience demand for diverse storytelling, and Netflix’s expansion into non-English markets to attract and retain subscribers worldwide.
+
+The scatter plot reveals a slight decreasing trend in movie lengths from 1940 to 2020. This suggests a shift toward shorter films, potentially reflecting changing viewer habits, such as a preference for more concise content in the streaming era. Given Netflix’s data-driven approach, this trend likely influenced its decision to produce shorter movies, catering to modern audiences who favor engaging, time-efficient content.
+
+To make the trend clearer, the second plot groups movie lengths by decade, reducing the noise from individual data points in the scatter plot. This broader view highlights more distinct shifts over time, making it easier to see how Netflix’s production aligns with evolving consumer preferences.
+
+**Data Source**: Netflix Movies and TV Shows Dataset https://www.kaggle.com/shivamb/netflix-shows?select=netflix_titles.csv
+
+**Author**: Shivam Bansal
+
+This dataset, sourced from Kaggle, originates from Flixable, a third-party Netflix search engine. It contains information about movies and TV shows available on Netflix since 2019, including:
+
+-   Attributes such as title, genre, language, release year, and rating.
+
+-   Insights into patterns related to content production, genre trends, and the evolution of media consumption.
+
+-   Integration with external datasets like IMDB and Rotten Tomatoes for deeper analysis.
+
+-   The data was last updated on Kaggle by Shivam Bansal.
+
+

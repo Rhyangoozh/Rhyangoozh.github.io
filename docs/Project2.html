@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Rhyan Goozh">
-<meta name="dcterms.date" content="2025-02-18">
-<meta name="description" content="Analysis on how consumers celebrate from TidyTuesday">
+<meta name="dcterms.date" content="2025-03-05">
+<meta name="description" content="Netflix Consumer Strategy">
 
-<title>Valentines Day Consumer Data – Rhyan Goozh</title>
+<title>Text Analysis – Rhyan Goozh</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -145,7 +145,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./Project2.html"> 
+    <a class="nav-link active" href="./Project2.html" aria-current="page"> 
 <span class="menu-text">Netflix Text Analysis</span></a>
   </li>  
 </ul>
@@ -159,20 +159,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#question-1-what-are-the-most-commonly-produced-genres-on-netflix" id="toc-question-1-what-are-the-most-commonly-produced-genres-on-netflix" class="nav-link active" data-scroll-target="#question-1-what-are-the-most-commonly-produced-genres-on-netflix">Question 1: What are the most commonly produced genres on Netflix?</a></li>
+  <li><a href="#question-2-is-there-a-relationship-between-movie-length-and-release-year" id="toc-question-2-is-there-a-relationship-between-movie-length-and-release-year" class="nav-link" data-scroll-target="#question-2-is-there-a-relationship-between-movie-length-and-release-year">Question 2: Is there a relationship between movie length and release year?</a></li>
+  <li><a href="#how-many-titles-on-netflix-use-the-in-it" id="toc-how-many-titles-on-netflix-use-the-in-it" class="nav-link" data-scroll-target="#how-many-titles-on-netflix-use-the-in-it">How many titles on Netflix use “The” in it?</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Valentines Day Consumer Data</h1>
+<h1 class="title">Text Analysis</h1>
 </div>
 
 <div>
   <div class="description">
-    <p>Analysis on how consumers celebrate from TidyTuesday</p>
+    <p>Netflix Consumer Strategy</p>
   </div>
 </div>
 
@@ -189,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 18, 2025</p>
+      <p class="date">March 5, 2025</p>
     </div>
   </div>
   
@@ -201,44 +209,138 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In this project, I analyze consumer spending on Valentines Day using the Tidy Tuesday Valentine’s Day survey data from the National Retail Federation (NRF) Valentine’s Day Data Center. The data set provides detailed information on how consumers celebrate Valentine’s Day annually for over a decade (2010 - 2022) and uses interactive charts to explore a demographic break down on both spending and gift type. This data set is ideal for exploring and understanding relationships in consumer spending.</p>
+<p>In this project, I analyzed the Netflix Movies and TV Shows dataset to explore trends and insights into potential Netflix consumer engagement strategy. This dataset, sourced from Kaggle and made available through TidyTuesday, provides information on titles, genres, release years, duration, and descriptions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gifts_age <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-02-13/gifts_age.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>netflix_titles <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-20/netflix_titles.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytuesdayR)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gifts_age, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> SpendingCelebrating, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span>  </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Percentage of People Spending Money on Valentine's Day by Age"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Age Group"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Percentage Spending (%)"</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="question-1-what-are-the-most-commonly-produced-genres-on-netflix" class="level1">
+<h1>Question 1: What are the most commonly produced genres on Netflix?</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert listed genres to lowercase</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>netflix_titles <span class="ot">&lt;-</span> netflix_titles <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">listed_in =</span> <span class="fu">str_to_lower</span>(listed_in))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split genres into individual rows</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>genre_trends <span class="ot">&lt;-</span> netflix_titles <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(listed_in, <span class="at">sep =</span> <span class="st">", "</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(listed_in, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">primary_genre =</span> listed_in, <span class="at">total_count =</span> n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only the top 10 genres</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>top_10_genres <span class="ot">&lt;-</span> genre_trends <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(total_count, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar plot with genre names on x-axis</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>genre_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(top_10_genres, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(primary_genre, total_count), <span class="at">y =</span> total_count)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span>  </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Top 10 Most Commonly Produced Genres on Netflix"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Genre"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(genre_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Valentinespending_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Project2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Here I created a scatterplot to visualizes the percentage of people spending money on Valentine’s Day across different age groups. The x-axis represents various age groups, while the y-axis indicates the percentage of individuals in each group who report spending money on the holiday. A red line is used to connect the points, highlighting the trend in spending participation across age demographics.</p>
-<p>This visualization helps identify spending habits among different generations, showing whether younger or older individuals are more likely to participate financially in Valentine’s Day celebrations.</p>
-<p><strong>Data Source:</strong></p>
-<p><a href="https://www.kaggle.com/datasets/infinator/happy-valentines-day-2022" class="uri">https://www.kaggle.com/datasets/infinator/happy-valentines-day-2022</a></p>
-<p><strong>Author:</strong> TidyTuesday Project</p>
-<p>This data was sourced from the TidyTuesday project, which provides weekly data challenges for the R community. Specifically, the dataset focuses on consumer spending on valentine’s Day:</p>
-<p>- The dataset originates from the National Retail Federation’s annual Valentine’s Day surveys and last updated November 2024.</p>
-<p>- Data spans from 2010 to 2022 and examines spending habits by age group.</p>
-<p>- This dataset provides insights into planned spending on different types of gifts and overall spending participation.</p>
+</section>
+<section id="question-2-is-there-a-relationship-between-movie-length-and-release-year" class="level1">
+<h1>Question 2: Is there a relationship between movie length and release year?</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert duration to numeric values (for movies only) and exclude any shows with "season" in duration</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>netflix_titles <span class="ot">&lt;-</span> netflix_titles <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract movie duration, excluding anything that has the word 'season' in it using negative lookahead</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">movie_length =</span> <span class="fu">as.numeric</span>(<span class="fu">str_extract</span>(duration, <span class="st">"^(?!.*seasons).*</span><span class="sc">\\</span><span class="st">d+"</span>))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to only movies and ensure there are valid movie lengths and release years</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>movie_data <span class="ot">&lt;-</span> netflix_titles <span class="sc">|&gt;</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    type <span class="sc">==</span> <span class="st">"Movie"</span> <span class="sc">&amp;</span> </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(movie_length) <span class="sc">&amp;</span> </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(release_year) <span class="sc">&amp;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    movie_length <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the first few rows of filtered movie data</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(movie_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 13
+  show_id type  title director      cast  country date_added release_year rating
+  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt; 
+1 s2      Movie 7:19  Jorge Michel… Demi… Mexico  December …         2016 TV-MA 
+2 s3      Movie 23:59 Gilbert Chan  Tedd… Singap… December …         2011 R     
+3 s4      Movie 9     Shane Acker   Elij… United… November …         2009 PG-13 
+4 s5      Movie 21    Robert Luket… Jim … United… January 1…         2008 PG-13 
+5 s7      Movie 122   Yasir Al Yas… Amin… Egypt   June 1, 2…         2019 TV-MA 
+6 s8      Movie 187   Kevin Reynol… Samu… United… November …         1997 R     
+# ℹ 4 more variables: duration &lt;chr&gt;, listed_in &lt;chr&gt;, description &lt;chr&gt;,
+#   movie_length &lt;dbl&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot of movie length vs. release year with trend line</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>length_vs_year_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(movie_data, <span class="fu">aes</span>(<span class="at">x =</span> release_year, <span class="at">y =</span> movie_length)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"darkred"</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relationship Between Movie Length and Release Year"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Release Year"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Movie Length (minutes)"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(length_vs_year_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Project2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="how-many-titles-on-netflix-use-the-in-it" class="level1">
+<h1>How many titles on Netflix use “The” in it?</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>the_count <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">str_detect</span>(netflix_titles[[<span class="st">"title"</span>]], <span class="st">"</span><span class="sc">\\</span><span class="st">bthe</span><span class="sc">\\</span><span class="st">b"</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>the_count</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 558</code></pre>
+</div>
+</div>
+<p><strong>Analysis on Tables/Plots:</strong></p>
+<p>This dataset provides insights into Netflix’s content strategy by analyzing trends in genre production and movie lengths. The findings highlight how Netflix has adapted its catalog over time based on consumer preferences and market demands. The analysis focuses on two key aspects: the most commonly produced genres and the relationship between movie lengths and release years.</p>
+<p>My first bar chart displays the top 10 most frequently produced genres on Netflix, with Drama, Comedy, and International Movies and TV shows leading. These genres dominate the platform’s library, suggesting that Netflix has prioritized them in response to audience demand. Netflix’s heavy investment in Drama indicates a strategic response to consumer preference for emotionally engaging narratives, while Comedy’s strong presence suggests sustained demand for lighthearted entertainment. The high production of International entertainment reflects the growing interest in informative, worldly-based content, likely driven by increased global accessibility, audience demand for diverse storytelling, and Netflix’s expansion into non-English markets to attract and retain subscribers worldwide.</p>
+<p>The scatter plot reveals a slight decreasing trend in movie lengths from 1940 to 2020. This suggests a shift toward shorter films, potentially reflecting changing viewer habits, such as a preference for more concise content in the streaming era. Given Netflix’s data-driven approach, this trend likely influenced its decision to produce shorter movies, catering to modern audiences who favor engaging, time-efficient content.</p>
+<p>To make the trend clearer, the second plot groups movie lengths by decade, reducing the noise from individual data points in the scatter plot. This broader view highlights more distinct shifts over time, making it easier to see how Netflix’s production aligns with evolving consumer preferences.</p>
+<p><strong>Data Source</strong>: Netflix Movies and TV Shows Dataset https://www.kaggle.com/shivamb/netflix-shows?select=netflix_titles.csv</p>
+<p><strong>Author</strong>: Shivam Bansal</p>
+<p>This dataset, sourced from Kaggle, originates from Flixable, a third-party Netflix search engine. It contains information about movies and TV shows available on Netflix since 2019, including:</p>
+<ul>
+<li><p>Attributes such as title, genre, language, release year, and rating.</p></li>
+<li><p>Insights into patterns related to content production, genre trends, and the evolution of media consumption.</p></li>
+<li><p>Integration with external datasets like IMDB and Rotten Tomatoes for deeper analysis.</p></li>
+<li><p>The data was last updated on Kaggle by Shivam Bansal.</p></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

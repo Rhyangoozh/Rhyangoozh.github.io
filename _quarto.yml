@@ -10,7 +10,8 @@ website:
             text: "FBI Crime Reporting Analysis"
           - href: Valentinespending.html
             text: "Valentine's Day Consumer Spending Analysis"
-
+      - href: Project2.html
+        text: "Netflix Text Analysis"
 format:
   html:
     theme: cosmo
