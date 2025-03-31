@@ -1,0 +1,171 @@
+---
+title: "Project3"
+description: |
+  Permutation Test on NHL Player Birthdates vs. Canadian Population
+author: Rhyan Goozh
+date: March 30, 2025
+format: html
+execute: 
+  warning: false
+  message: false
+---
+
+The analysis explores whether NHL players are disproportionately born in certain months compared to the general Canadian population. Specifically, we will test if players born in the first quarter (January-March) are overrepresented.
+
+Our research question is: Are NHL players born significantly more often in the first quarter of the year than the general Canadian population?
+
+Hypotheses:
+
+-   Null hypothesis (H0): The proportion of NHL players born in the first quarter of the year is the same as the proportion of Canadians born in the first quarter.
+
+-   Alternative hypothesis (H1): The proportion of NHL players born in the first quarter of the year is significantly higher than the proportion of Canadians born in the first quarter.
+
+We will conduct a right-tailed permutation test to test this hypothesis. If the p-value is below the significance level (0.05), we will reject the null hypothesis. Otherwise, we fail to reject it.
+
+```{r}
+install.packages("tidytuesdayR", repos = "https://cran.rstudio.com/")
+library(tidytuesdayR)
+
+# Load the data for January 9, 2024
+tuesdata <- tidytuesdayR::tt_load('2024-01-09')
+```
+
+```{r}
+library(dplyr)
+library(lubridate)
+library(readr)
+library(tidyverse)
+library(ggplot2)
+library(purrr)
+library(tidyr)
+set.seed(123)
+```
+
+```{r}
+# Importing datasets I will analyze 
+canada_births_1991_2022 <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-01-09/canada_births_1991_2022.csv')
+nhl_player_births <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-01-09/nhl_player_births.csv')
+nhl_rosters <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-01-09/nhl_rosters.csv')
+nhl_teams <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-01-09/nhl_teams.csv')
+```
+
+```{r}
+# Extracting the birth month and filtering relevant data from NHL dataset
+nhl_player_births <- nhl_player_births |> 
+  mutate(birth_month = month(as.Date(birth_date, format = "%Y-%m-%d"))) |> 
+  filter(!is.na(birth_month))
+
+# Preprocessing Canadian data for birth months in the general population and removing NA values
+canada_births_1991_2022 <- canada_births_1991_2022 |> 
+  filter(!is.na(month))
+```
+
+```{r}
+# Summary Statistics
+# Calculating the proportion of players and population born in the first quarter (Jan-Mar)
+
+# NHL first quarter proportion
+nhl_first_quarter <- nhl_player_births |> 
+  filter(birth_month %in% c(1, 2, 3)) |> 
+  summarize(first_quarter_prop = n() / nrow(nhl_player_births))
+
+# Canadian first quarter proportion
+canadian_first_quarter <- canada_births_1991_2022 |> 
+  filter(month %in% c(1, 2, 3)) |>  # 'month' column in the Canada dataset
+  summarize(first_quarter_prop = n() / nrow(canada_births_1991_2022))
+
+# View results
+nhl_first_quarter
+canadian_first_quarter
+```
+
+```{r}
+# Summary Statistics
+# Plot and visualize the distributions of birth months for NHL players and the Canadian population
+
+# Plot for NHL players
+ggplot(nhl_player_births, aes(x = birth_month)) +  # Use 'birth_month' from nhl_player_births
+  geom_bar(fill = "skyblue", color = "black") +
+  labs(title = "Birth Month Distribution of NHL Players", x = "Month", y = "Count") +
+  theme_minimal()
+
+# Plot for Canadian population
+ggplot(canada_births_1991_2022, aes(x = month)) +  # Use 'month' from canada_births_1991_2022
+  geom_bar(fill = "orange", color = "black") +
+  labs(title = "Birth Month Distribution of Canadian Population", x = "Month", y = "Count") +
+  theme_minimal()
+```
+
+```{r}
+# Define a function to simulate the birthdate distribution under the null hypothesis
+# Permutation test function to simulate the birth month difference under the null hypothesis
+perm_test <- function(nhl_data, canadian_data, n_perm = 5000) {
+  observed_diff <- nhl_data |> 
+    filter(birth_month %in% c(1, 2, 3)) |> 
+    nrow() / nrow(nhl_data) - 
+    canadian_data |> 
+    filter(month %in% c(1, 2, 3)) |> 
+    nrow() / nrow(canadian_data)
+  
+  perm_diffs <- map_dbl(1:n_perm, ~ {
+    shuffled_nhl <- nhl_data |> 
+      mutate(birth_month = sample(birth_month))  # Shuffle the NHL birth months
+    mean(shuffled_nhl$birth_month %in% c(1, 2, 3)) - 
+      mean(canadian_data$month %in% c(1, 2, 3))  # Use 'month' in Canadian data
+  })
+  
+  tibble(observed = observed_diff, permuted = perm_diffs)
+}
+
+# Running the permutation test
+perm_results <- perm_test(nhl_player_births, canada_births_1991_2022)
+```
+
+```{r}
+# Calculate p-value
+p_value <- sum(perm_results$permuted >= perm_results$observed) / length(perm_results$permuted)
+p_value
+
+# Function to calculate confidence intervals for the permutation test results
+calculate_ci <- function(perm_results, alpha = 0.05) {
+  lower <- quantile(perm_results$permuted, probs = alpha / 2)
+  upper <- quantile(perm_results$permuted, probs = 1 - alpha / 2)
+  c(lower, upper)
+}
+
+conf_int <- calculate_ci(perm_results)
+conf_int
+```
+
+```{r}
+# Plot the permutation test results
+# Plotting the null distribution and observed difference
+ggplot(perm_results, aes(x = permuted)) +
+  geom_histogram(binwidth = 0.01, fill = "skyblue", color = "black", alpha = 0.7) +
+  geom_vline(aes(xintercept = observed), color = "red", linetype = "dashed", size = 1.2) +
+  labs(title = "Permutation Test Results: NHL vs Canadian Birth Months", x = "Proportion Difference", y = "Frequency") +
+  theme_minimal()
+```
+
+Conclusion:
+
+The plot displays the distribution of permuted differences in birth month proportions between NHL players and the general Canadian population. The red dashed line represents the observed difference between the two groups. From the permutation test, we calculated the observed difference in proportions as 0.0484. The p-value from the test is 1, which is greater than the significance level of 0.05, so we fail to reject the null hypothesis.
+
+The 95% confidence interval for the difference in proportions is [0.0484, 0.0484], meaning that all permuted values are identical, which suggests no variation in the results. Therefore, based on this analysis, we conclude that NHL players are not significantly more likely to be born in the first quarter of the year compared to the general Canadian population.
+
+However, it's important to note that the relative age effect (RAE) is a well-documented phenomenon in hockey and other sports, particularly at the youth and junior levels, where players born in the first quarter of the year have a competitive advantage. This effect has been widely recognized and may play a role in creating the perception that NHL players are disproportionately born early in the year. It's possible that other factors—such as sample size, variations in the dataset, or the specific nature of the NHL player pool—could explain the discrepancy between our findings and what the literature typically reports.
+
+
+Data Source:
+
+TidyTuesday Dataset – January 9, 2024
+
+Data for this analysis was sourced from the TidyTuesday GitHub repository for the week of January 9, 2024. The datasets contain birthdate information for Canadian populations and NHL players:
+
+Canadian Births (1991-2022): This dataset includes monthly birth counts for Canadian residents from 1991 to 2022. It is available at this link.
+NHL Player Births: This dataset contains birthdates of NHL players and is available at this link.
+NHL Rosters: A dataset with NHL team rosters and player information, available at this link.
+NHL Teams: This dataset contains information about NHL teams, available at this link.
+The data is up-to-date as of January 2024. All datasets are publicly available via GitHub and were accessed using the tidytuesdayR package.
+
+
