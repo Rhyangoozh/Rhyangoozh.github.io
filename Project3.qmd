@@ -1,5 +1,5 @@
 ---
-title: "Project3"
+title: "Permutation Tests"
 description: |
   Permutation Test on NHL Player Birthdates vs. Canadian Population
 author: Rhyan Goozh

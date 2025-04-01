@@ -12,6 +12,8 @@ website:
             text: "Valentine's Day Consumer Spending Analysis"
       - href: Project2.html
         text: "Netflix Text Analysis"
+      - href: Project3.qmd
+        text: "Permutation Tests"
 format:
   html:
     theme: cosmo
