@@ -1,0 +1,43 @@
+---
+title: "Ethics: Data and Power" 
+description: |
+  TikTok Ethics Project: Behavioral Data and Personalization
+author: Rhyan Goozh
+date: April 14, 2025
+format: html
+execute: 
+  warning: false
+  message: false
+---
+
+## Personalized Ads and Ethical Dilemmas: TikTok’s Use of Behavioral Data
+
+TikTok’s popularity is driven in part by its ability to show users hyper-personalized content and advertisements through machine learning algorithms. These algorithms analyze behavioral data such as watch time, likes, replays, and comments to create a “For You” feed and deliver targeted ads. Behind the scenes, this involves extensive **user profiling**, **predictive modeling**, and the **inference of demographic characteristics** such as gender and age. While TikTok does not always collect demographic data directly, public documentation like the [2021 Privacy Policy](https://www.tiktok.com/legal/privacy-policy) suggests that behavioral signals are used to estimate user traits—though the specific methods are not fully disclosed.
+
+This process raises several ethical concerns. How much do users actually consent to? Is the data really anonymous? Can inferred attributes lead to discrimination? This project explores four key ethical dilemmas embedded in TikTok’s data practices.
+
+### 1. Informed Consent and the Illusion of Control
+
+One of the central issues is whether users have meaningfully consented to TikTok’s data collection and use. As Barocas & Nissenbaum (2009) explain, the typical “notice and consent” model fails to provide genuine understanding of how data will be used—especially when future uses are unclear or hidden behind complex policy language. TikTok’s 2021 Privacy Policy describes the collection of behavioral data for purposes like improving services and targeting ads. However, it does not clearly outline the full extent of personalization or **profiling algorithms** used to infer user characteristics, nor the third parties involved in data sharing (TikTok, 2021). Given the opacity of these systems and how often users accept terms without reading them, true informed consent is likely not possible. Furthermore, as Barocas & Nissenbaum also point out, app design often includes dark patterns—subtle design tricks that nudge users to accept permissions without realizing their implications. This raises the question: can users really opt out of a system that is designed to obscure their choices?
+
+### 2. Identifiability and the Risk of Re-Identification
+
+TikTok claims that some of its data is anonymized or aggregated, but this doesn’t guarantee privacy. According to Leetaru (2016), even supposedly anonymous data can often be re-identified when combined with other data sources, a process known as “mosaicking.” For example, details like location, usage patterns, and device metadata can often be linked back to individuals, especially when tied to **inferred demographic profiles**. If TikTok uses behavioral cues to infer traits like age or gender and combines them with device identifiers or app usage metadata, the risk of re-identification becomes real. This is especially troubling for users who believe their data is anonymous when, in fact, it may still expose them to targeting or profiling.
+
+### 3. Unintended and Harmful Uses of Data
+
+TikTok’s algorithms may also use behavioral data in ways that were not explicitly stated in its policies, leading to unintended consequences. For example, content engagement patterns can be used to infer when users are feeling vulnerable or emotionally unstable—data that advertisers or recommendation engines could exploit. This creates ethical concerns, especially for younger users or those struggling with mental health. As Barocas & Nissenbaum (2009) warn, data collected for one purpose may be repurposed for another, potentially harming users who were unaware of such risks. When TikTok’s algorithm detects that a user is binge-watching certain types of content (e.g., related to body image or depression), it may double down and promote similar content, potentially reinforcing harmful behavior. This scenario reflects how data can be used in unintended, damaging ways that affect both individuals and communities.
+
+### 4. Inferred Demographics and Proxy Discrimination
+
+TikTok does not ask users for race or gender directly, but it still **infers these attributes using behavioral patterns, language, and possibly facial features from videos**—though TikTok has not publicly confirmed all technical details. This practice aligns with Buolamwini & Gebru’s (2018) work on algorithmic bias, which shows how demographic inferences can lead to discriminatory outcomes—especially when training data is not representative or when inferred demographics become proxies for exclusion. If TikTok’s ad system uses **inferred gender or race** to determine who sees certain ads or content, this could result in **proxy discrimination**. For example, an advertiser may unintentionally exclude users that the algorithm identifies as “less profitable” based on biased inferences. The ethical dilemma here is not just whether race or gender *should* be used—but whether the algorithm is replicating or reinforcing social inequalities through proxies it was never explicitly told to use.
+
+## References
+
+-   Barocas, S., & Nissenbaum, H. (2009). *On Notice: The Trouble with Notice and Consent*. In Proceedings of the Engaging Data Forum: The First International Forum on the Application and Management of Personal Electronic Information.
+
+-   Buolamwini, J., & Gebru, T. (2018). *Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification*. Proceedings of Machine Learning Research: 81, 77–91.
+
+-   Leetaru, K. (2016). *The Big Data Era of Mosaicked Deidentification: Can We Anonymize Data Anymore?* Forbes. <https://www.forbes.com/sites/kalevleetaru/2016/09/26/the-big-data-era-of-mosaicked-deidentification-can-we-anonymize-data-anymore/>
+
+-   TikTok. (2021). *Privacy Policy*. <https://www.tiktok.com/legal/privacy-policy>
