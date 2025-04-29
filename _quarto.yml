@@ -16,6 +16,8 @@ website:
         text: "Permutation Tests"
       - href: Project4.qmd
         text: "Ethics: Data and Power"
+      - href: Project5.qmd
+        text: "SQL"
 format:
   html:
     theme: cosmo

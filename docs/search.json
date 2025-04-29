@@ -116,7 +116,7 @@
     "href": "Project5.html#insights",
     "title": "SQL",
     "section": "Insights",
-    "text": "Insights\nThis analysis shows how the frequency and type of traffic stop outcomes (e.g., warnings, arrests, searches) differ not only by race and gender but also across state lines. For instance, preliminary patterns suggest that Black and Hispanic individuals experience higher rates of searches relative to other groups, particularly in Texas and North Carolina."
+    "text": "Insights\nThis analysis shows how the frequency and type of traffic stop outcomes (e.g., warnings, arrests, searches) vary by race, gender, and state. Across California, Texas, and North Carolina, white male drivers are stopped most often, but Black and Hispanic individuals—especially males—face higher rates of searches and arrests, particularly in Texas and North Carolina. White drivers, especially females, are more likely to receive warnings. These trends point to consistent disparities and potential bias in traffic enforcement across state lines."
   },
   {
     "objectID": "Project5.html#reference",
@@ -124,5 +124,12 @@
     "title": "SQL",
     "section": "Reference",
     "text": "Reference\nPierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10."
+  },
+  {
+    "objectID": "Project5.html#checking-for-missing-values",
+    "href": "Project5.html#checking-for-missing-values",
+    "title": "SQL",
+    "section": "Checking for Missing Values",
+    "text": "Checking for Missing Values\n\n\nCode\n-- Check missing subject_race in CA\nSELECT COUNT(*) FROM ca_statewide_2023_01_26 WHERE subject_race IS NULL;\n\n\n\n1 records\n\n\nCOUNT(*)\n\n\n\n\n1\n\n\n\n\n\n\n\nCode\n-- Check missing subject_sex in CA\nSELECT COUNT(*) FROM ca_statewide_2023_01_26 WHERE subject_sex IS NULL;\n\n\n\n1 records\n\n\nCOUNT(*)\n\n\n\n\n96\n\n\n\n\n\n\n\nCode\n-- Check missing outcome in CA\nSELECT COUNT(*) FROM ca_statewide_2023_01_26 WHERE outcome IS NULL;\n\n\n\n1 records\n\n\nCOUNT(*)\n\n\n\n\n9588775\n\n\n\n\n\n\n\nCode\n-- Check missing subject_race in TX\nSELECT COUNT(*) FROM tx_statewide_2020_04_01 WHERE subject_race IS NULL;\n\n\n\n1 records\n\n\nCOUNT(*)\n\n\n\n\n352\n\n\n\n\n\n\n\nCode\n-- Check missing subject_sex in TX\nSELECT COUNT(*) FROM tx_statewide_2020_04_01 WHERE subject_sex IS NULL;\n\n\n\n1 records\n\n\nCOUNT(*)\n\n\n\n\n436\n\n\n\n\n\n\n\nCode\n-- Check missing outcome in TX\nSELECT COUNT(*) FROM tx_statewide_2020_04_01 WHERE outcome IS NULL;\n\n\n\n1 records\n\n\nCOUNT(*)\n\n\n\n\n2357\n\n\n\n\n\n\n\nCode\n-- Check missing subject_race in NC\nSELECT COUNT(*) FROM nc_statewide_2020_04_01 WHERE subject_race IS NULL;\n\n\n\n1 records\n\n\nCOUNT(*)\n\n\n\n\n18\n\n\n\n\n\n\n\nCode\n-- Check missing subject_sex in NC\nSELECT COUNT(*) FROM nc_statewide_2020_04_01 WHERE subject_sex IS NULL;\n\n\n\n1 records\n\n\nCOUNT(*)\n\n\n\n\n18\n\n\n\n\n\n\n\nCode\n-- Check missing outcome in NC\nSELECT COUNT(*) FROM nc_statewide_2020_04_01 WHERE outcome IS NULL;\n\n\n\n1 records\n\n\nCOUNT(*)\n\n\n\n\n605059"
   }
 ]
