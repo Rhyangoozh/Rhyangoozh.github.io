@@ -51,46 +51,46 @@ SELECT * FROM nc_statewide_2020_04_01 LIMIT 5;
 -- Check missing subject_race in CA
 SELECT COUNT(*) FROM ca_statewide_2023_01_26 WHERE subject_race IS NULL;
 ```
-
 ```{sql, connection=con_traffic}
 -- Check missing subject_sex in CA
 SELECT COUNT(*) FROM ca_statewide_2023_01_26 WHERE subject_sex IS NULL;
 ```
-
 ```{sql, connection=con_traffic}
 -- Check missing outcome in CA
 SELECT COUNT(*) FROM ca_statewide_2023_01_26 WHERE outcome IS NULL;
 ```
+California Missing Values:
+There is 1 missing value for subject_race, suggesting almost complete data in this category. The subject_sex field has 96 missing values, which is still minimal relative to the dataset size. However, the outcome variable is missing in 9,588,775 records, indicating a severe gap in outcome reporting that could significantly limit analysis and raise questions about data collection methods or system design.
 
 ```{sql, connection=con_traffic}
 -- Check missing subject_race in TX
 SELECT COUNT(*) FROM tx_statewide_2020_04_01 WHERE subject_race IS NULL;
 ```
-
 ```{sql, connection=con_traffic}
 -- Check missing subject_sex in TX
 SELECT COUNT(*) FROM tx_statewide_2020_04_01 WHERE subject_sex IS NULL;
 ```
-
 ```{sql, connection=con_traffic}
 -- Check missing outcome in TX
 SELECT COUNT(*) FROM tx_statewide_2020_04_01 WHERE outcome IS NULL;
 ```
+Texas Missing Values:
+The dataset shows 352 missing values for subject_race and 436 missing values for subject_sex, which are relatively small proportions and suggest generally good data quality for these variables. There are 2,357 missing values for outcome, a non-negligible amount that should be noted in any evaluation of the dataset’s completeness.
 
 ```{sql, connection=con_traffic}
 -- Check missing subject_race in NC
 SELECT COUNT(*) FROM nc_statewide_2020_04_01 WHERE subject_race IS NULL;
 ```
-
 ```{sql, connection=con_traffic}
 -- Check missing subject_sex in NC
 SELECT COUNT(*) FROM nc_statewide_2020_04_01 WHERE subject_sex IS NULL;
 ```
-
 ```{sql, connection=con_traffic}
 -- Check missing outcome in NC
 SELECT COUNT(*) FROM nc_statewide_2020_04_01 WHERE outcome IS NULL;
 ```
+North Carolina Missing Values:
+Both subject_race and subject_sex have 18 missing values each, reflecting strong consistency in demographic reporting. On the other hand, 605,059 records are missing outcome values, which could meaningfully affect any modeling or statistical inference relying on outcomes and highlights the importance of addressing or accounting for this missingness.
 
 ## SQL Table Queries
 
@@ -125,6 +125,7 @@ WHERE subject_race IS NOT NULL
 GROUP BY subject_race, subject_sex, outcome
 ORDER BY count DESC
 ```
+
 ```{sql, connection=con_traffic}
 -- Query 3: NC outcomes by race and gender
 SELECT 
