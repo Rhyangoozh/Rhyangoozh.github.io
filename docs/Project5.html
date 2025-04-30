@@ -156,6 +156,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="./Project4.html"> 
 <span class="menu-text">Ethics: Data and Power</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./Project5.html" aria-current="page"> 
+<span class="menu-text">SQL</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -1042,6 +1046,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
+<p>California Missing Values: There is 1 missing value for subject_race, suggesting almost complete data in this category. The subject_sex field has 96 missing values, which is still minimal relative to the dataset size. However, the outcome variable is missing in 9,588,775 records, indicating a severe gap in outcome reporting that could significantly limit analysis and raise questions about data collection methods or system design.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1108,6 +1113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
+<p>Texas Missing Values: The dataset shows 352 missing values for subject_race and 436 missing values for subject_sex, which are relatively small proportions and suggest generally good data quality for these variables. There are 2,357 missing values for outcome, a non-negligible amount that should be noted in any evaluation of the dataset’s completeness.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1174,6 +1180,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
+<p>North Carolina Missing Values: Both subject_race and subject_sex have 18 missing values each, reflecting strong consistency in demographic reporting. On the other hand, 605,059 records are missing outcome values, which could meaningfully affect any modeling or statistical inference relying on outcomes and highlights the importance of addressing or accounting for this missingness.</p>
 </section>
 <section id="sql-table-queries" class="level2">
 <h2 class="anchored" data-anchor-id="sql-table-queries">SQL Table Queries</h2>
@@ -1639,6 +1646,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">Reference</h2>
 <p>Pierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al.&nbsp;2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(con_traffic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 
 
 </section>
