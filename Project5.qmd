@@ -1,5 +1,5 @@
 ---
-title: "SQL"
+title: "SQL Analysis"
 description: | 
   Traffic Stop Outcomes by Race and Gender Across Three States
 author: Rhyan Goozh
@@ -10,8 +10,12 @@ execute:
   warning: false
   message: false
 ---
+## Introduction
+
+This project explores how traffic stop outcomes vary by race and gender across California, Texas, and North Carolina. Using the Stanford Open Policing Project SQL database, we query traffic stop data from California, Texas, and North Carolina to identify potential disparities in stop outcomes such as arrests, searches, or warnings. Our analysis includes grouped summaries and visualizations to highlight trends and differences across the states.
 
 ```{r}
+# Connecting to the Traffic Database
 library(RMariaDB)
 
 con_traffic <- DBI::dbConnect(
@@ -22,10 +26,6 @@ con_traffic <- DBI::dbConnect(
  password = Sys.getenv("TRAFFIC_PWD")
 )
 ```
-
-## Introduction
-
-This project explores how traffic stop outcomes vary by race and gender across California, Texas, and North Carolina. Using the Stanford Open Policing Project SQL database, we query three state-wide traffic stop datasets to identify potential disparities in stop outcomes such as arrests, searches, or warnings. Our analysis includes grouped summaries and visualizations to highlight trends and differences across the states.
 
 ## Table Previews
 
@@ -92,7 +92,8 @@ SELECT COUNT(*) FROM nc_statewide_2020_04_01 WHERE outcome IS NULL;
 North Carolina Missing Values:
 Both subject_race and subject_sex have 18 missing values each, reflecting strong consistency in demographic reporting. On the other hand, 605,059 records are missing outcome values, which could meaningfully affect any modeling or statistical inference relying on outcomes and highlights the importance of addressing or accounting for this missingness.
 
-## SQL Table Queries
+## SQL Table Queries 
+# Stop Outcomes by Race and Gender in CA, TX, and NC
 
 ```{sql, connection=con_traffic}
 -- Query 1: CA outcomes by race and gender

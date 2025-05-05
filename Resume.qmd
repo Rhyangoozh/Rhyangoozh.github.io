@@ -1,0 +1,17 @@
+---
+title: "Resume"
+
+output: Goozh, Rhyan, Pomona College, Resume.pdf
+format: html
+execute: 
+  warning: false
+  message: false
+---
+
+You can view and download my [resume](Resume.pdf).
+
+<iframe src="Resume.pdf" width="600" height="800">
+
+</iframe>
+
+

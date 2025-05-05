@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2025-04-24">
 <meta name="description" content="Traffic Stop Outcomes by Race and Gender Across Three States">
 
-<title>SQL – Rhyan Goozh</title>
+<title>SQL Analysis – Rhyan Goozh</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,7 +158,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./Project5.html" aria-current="page"> 
-<span class="menu-text">SQL</span></a>
+<span class="menu-text">SQL Analysis</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Resume.html"> 
+<span class="menu-text">Resume</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Finalpresentation.html"> 
+<span class="menu-text">Application of My Webite</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -180,11 +188,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#table-previews" id="toc-table-previews" class="nav-link" data-scroll-target="#table-previews">Table Previews</a></li>
   <li><a href="#checking-for-missing-values" id="toc-checking-for-missing-values" class="nav-link" data-scroll-target="#checking-for-missing-values">Checking for Missing Values</a></li>
   <li><a href="#sql-table-queries" id="toc-sql-table-queries" class="nav-link" data-scroll-target="#sql-table-queries">SQL Table Queries</a></li>
+  <li><a href="#stop-outcomes-by-race-and-gender-in-ca-tx-and-nc" id="toc-stop-outcomes-by-race-and-gender-in-ca-tx-and-nc" class="nav-link" data-scroll-target="#stop-outcomes-by-race-and-gender-in-ca-tx-and-nc">Stop Outcomes by Race and Gender in CA, TX, and NC</a>
+  <ul class="collapse">
   <li><a href="#load-data-into-r-from-sql-queries" id="toc-load-data-into-r-from-sql-queries" class="nav-link" data-scroll-target="#load-data-into-r-from-sql-queries">Load Data into R from SQL Queries</a></li>
   <li><a href="#combine-states-data" id="toc-combine-states-data" class="nav-link" data-scroll-target="#combine-states-data">Combine States Data</a></li>
   <li><a href="#two-well-labled-plots" id="toc-two-well-labled-plots" class="nav-link" data-scroll-target="#two-well-labled-plots">Two Well Labled Plots</a></li>
   <li><a href="#insights" id="toc-insights" class="nav-link" data-scroll-target="#insights">Insights</a></li>
   <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -193,7 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">SQL</h1>
+<h1 class="title">SQL Analysis</h1>
 </div>
 
 <div>
@@ -227,23 +238,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This project explores how traffic stop outcomes vary by race and gender across California, Texas, and North Carolina. Using the Stanford Open Policing Project SQL database, we query traffic stop data from California, Texas, and North Carolina to identify potential disparities in stop outcomes such as arrests, searches, or warnings. Our analysis includes grouped summaries and visualizations to highlight trends and differences across the states.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RMariaDB)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>con_traffic <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> RMariaDB<span class="sc">::</span><span class="fu">MariaDB</span>(),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> <span class="at">dbname =</span> <span class="st">"traffic"</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> <span class="at">host =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_HOST"</span>),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="at">user =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_USER"</span>),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="at">password =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_PWD"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Connecting to the Traffic Database</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RMariaDB)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>con_traffic <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> RMariaDB<span class="sc">::</span><span class="fu">MariaDB</span>(),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> <span class="at">dbname =</span> <span class="st">"traffic"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="at">host =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_HOST"</span>),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="at">user =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_USER"</span>),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> <span class="at">password =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_PWD"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>This project explores how traffic stop outcomes vary by race and gender across California, Texas, and North Carolina. Using the Stanford Open Policing Project SQL database, we query three state-wide traffic stop datasets to identify potential disparities in stop outcomes such as arrests, searches, or warnings. Our analysis includes grouped summaries and visualizations to highlight trends and differences across the states.</p>
 </section>
 <section id="table-previews" class="level2">
 <h2 class="anchored" data-anchor-id="table-previews">Table Previews</h2>
@@ -1184,6 +1196,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="sql-table-queries" class="level2">
 <h2 class="anchored" data-anchor-id="sql-table-queries">SQL Table Queries</h2>
+</section>
+<section id="stop-outcomes-by-race-and-gender-in-ca-tx-and-nc" class="level1">
+<h1>Stop Outcomes by Race and Gender in CA, TX, and NC</h1>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1496,7 +1511,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-</section>
 <section id="load-data-into-r-from-sql-queries" class="level2">
 <h2 class="anchored" data-anchor-id="load-data-into-r-from-sql-queries">Load Data into R from SQL Queries</h2>
 <div class="cell">
@@ -1654,6 +1668,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

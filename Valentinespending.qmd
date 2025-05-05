@@ -13,10 +13,12 @@ execute:
 In this project, I analyze consumer spending on Valentines Day using the Tidy Tuesday Valentine's Day survey data from the National Retail Federation (NRF) Valentine's Day Data Center. The data set provides detailed information on how consumers celebrate Valentine's Day annually for over a decade (2010 - 2022) and uses interactive charts to explore a demographic break down on both spending and gift type. This data set is ideal for exploring and understanding relationships in consumer spending.
 
 ```{r}
+# Importing data sets I will analyze 
 gifts_age <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2024/2024-02-13/gifts_age.csv')
 ```
 
 ```{r}
+# Scatter plot visualization of money spent on Valentines Day across different age groups  
 library(tidyverse)
 library(ggplot2)
 library(tidytuesdayR)
@@ -41,7 +43,7 @@ This visualization helps identify spending habits among different generations, s
 
 <https://www.kaggle.com/datasets/infinator/happy-valentines-day-2022>
 
-**Author:** TidyTuesday Project
+**Author:** National Retail Federation (NRF)
 
 This data was sourced from the TidyTuesday project, which provides weekly data challenges for the R community. Specifically, the dataset focuses on consumer spending on valentine's Day:
 

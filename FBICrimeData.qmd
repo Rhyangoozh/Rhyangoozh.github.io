@@ -13,12 +13,13 @@ execute:
 In this project, I analyze agency level crime data across all 50 states using the Tidy Tuesday *Agencies From the FBI Crime Data* *API* data set. The data set provides detailed information on law enforcement agencies across all 50 states that have submitted data to the FBI's Uniform Crime Reporting (UCR) program and are displayed on the Crime Data Explorer (CDE). This data set is ideal for exploring trends and understanding the fluidity in crime.
 
 ```{r}
-#install.packages("tidytuesdayR")
+# Importing data sets I will analyze 
 tuesdata <- tidytuesdayR::tt_load('2025-02-18')
 agencies <- tuesdata$agencies
 ```
 
 ```{r}
+# Scatter plot visualization of the distribution of law enforcement agencies by state and agency type 
 library(tidyverse)
 library(ggplot2)
 library(tidytuesdayR)
@@ -46,13 +47,14 @@ This visualization helps identify variations in agency distribution across state
 **Data Source:**
 
 <https://github.com/rfordatascience/tidytuesday/blob/master/data/2025/2025-02-18/agencies.csv>
+Original FBI data sourced from the **[FBI Crime Data Explorer API Documentation](https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi)**
 
 **Author:** TidyTuesday Project
 
-This data was sourced from the TidyTuesday project, which provides weekly data challenges for the R community. Specifically, the dataset focuses on law enforcement agencies across the U.S.:
+This dataset was sourced from the TidyTuesday project, which provides weekly data challenges for the R community. The underlying data originates from the FBI's Crime Data Explorer (CDE) API, which includes detailed information on law enforcement agencies across the U.S.:
 
 \- The dataset was last committed on February 18, 2025.
 
 \- It includes details on agencies that have submitted data to the FBI’s Uniform Crime Reporting (UCR) Program.
 
-\- The dataset provides insights into agency types, geographical distribution, and NIBRS participation.
+\- The dataset provides insights into agency types, geographic distribution, and NIBRS participation.

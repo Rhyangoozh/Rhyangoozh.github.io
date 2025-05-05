@@ -1,0 +1,72 @@
+---
+title: "Application of My Webite"
+author: "Rhyan Goozh"
+subtitle: "5/8/25"
+format:
+  revealjs:
+    scrollable: true
+    slide-number: true
+    show-slide-number: all
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Introduction
+
+-   Hi, I’m Rhyan Goozh.
+-   This presentation focuses on the application of my website: how it represents me not just as a student, but as someone entering the professional world.
+-   I’ve used data science as a tool to express curiosity, personality, and direction.
+
+------------------------------------------------------------------------
+
+## Purpose of the Website
+
+-   Beyond completing assignments, I built this site to:
+    -   Showcase my thinking
+    -   Highlight my interests
+    -   Create a personal, data-driven introduction to who I am
+-   I want the site to feel like a portfolio that reflects more than just skills.
+
+------------------------------------------------------------------------
+
+## The Netflix Titles Project
+
+-   I used string analysis and regular expressions to explore content themes.
+-   Instead of just following the assignment, I asked questions to reflect how I think:
+-   What kinds of stories am I drawn to?
+-   What patterns reflect culture, identity, or emotion?
+-   By following my curiosity through the data, I used the project to express a niche, personal way of engaging with the world.
+
+------------------------------------------------------------------------
+
+## Personalizing Data Science
+
+-   The project helped me realize:
+    -   I’m drawn to the stories that come from statistics.
+    -   Data can be used creatively—not just to measure, but to reveal how we think.
+-   By building this site, I’m not only learning tools—\
+    I’m showing how I think and what matters to me.
+
+------------------------------------------------------------------------
+
+## Application in Adult Life
+
+-   This site is something I can actually use:
+    -   As a talking point in interviews
+    -   To demonstrate how I approach complex problems
+    -   To highlight curiosity and initiative beyond a resume
+-   It's a way of presenting myself through work, not just talking about it.
+- As I move into the next stage of life, I want this site to bring together all parts of me—personal, academic, and professional.
+
+------------------------------------------------------------------------
+
+## Final Thoughts
+
+-   My website is more than a class project—it's a living example of:
+    -   How I connect analytical tools with personal interests
+    -   A chance to build something personal beyond just my technical skills
+    - A tool I’ll continue using to reflect who I am and who I’m becoming.
+-   Thanks for listening!

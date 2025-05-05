@@ -17,7 +17,11 @@ website:
       - href: Project4.qmd
         text: "Ethics: Data and Power"
       - href: Project5.qmd
-        text: "SQL"
+        text: "SQL Analysis"
+      - href: Resume.qmd
+        text: "Resume"
+      - href: Finalpresentation.qmd
+        text: "Application of My Webite"
 format:
   html:
     theme: cosmo
