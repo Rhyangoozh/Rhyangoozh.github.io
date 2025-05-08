@@ -129,11 +129,11 @@ permuted_diffs <- perm_results$permuted
 p_value <- mean(permuted_diffs >= observed_diff)
 p_value
 ```
-The permutation test shows that the proportion of NHL players born in Q1 (January–March) is significantly higher than expected compared to the Canadian population. With a p-value of 0.0208, we reject the null hypothesis that the birth month distributions are the same, suggesting a real bias in birth month representation among NHL players.
+The permutation test shows that the proportion of NHL players born in Q1 (January–March) is significantly higher than expected compared to the Canadian population. With a p-value of 0.0232, we reject the null hypothesis that the birth month distributions are the same, suggesting a real bias in birth month representation among NHL players.
 
 Conclusion:
 
-The permutation test indicates that the proportion of NHL players born in the first quarter of the year (January–March) is significantly higher than what we would expect based on the distribution of birth months in the general Canadian population. With a p-value of 0.0208, we reject the null hypothesis that the birth month distributions are the same. This suggests a real bias in birth month representation among NHL players, where they are more likely to be born in the first quarter of the year.
+The permutation test indicates that the proportion of NHL players born in the first quarter of the year (January–March) is significantly higher than what we would expect based on the distribution of birth months in the general Canadian population. With a p-value of 0.0232, we reject the null hypothesis that the birth month distributions are the same. This suggests a real bias in birth month representation among NHL players, where they are more likely to be born in the first quarter of the year.
 
 While this finding aligns with the concept of the relative age effect (RAE)—where players born earlier in the year may have a competitive advantage—it's important to recognize that other factors such as sample size, dataset variations, or specific characteristics of the NHL player pool could influence these results. Further research might consider these factors to deepen our understanding of birth month biases in hockey and other sports.
 
