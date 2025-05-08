@@ -20,8 +20,6 @@ website:
         text: "SQL Analysis"
       - href: Resume.qmd
         text: "Resume"
-      - href: Finalpresentation.qmd
-        text: "Application of My Webite"
 format:
   html:
     theme: cosmo

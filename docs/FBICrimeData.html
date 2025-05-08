@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Rhyan Goozh">
-<meta name="dcterms.date" content="2025-04-14">
-<meta name="description" content="TikTok Ethics Project: Behavioral Data and Personalization">
+<meta name="dcterms.date" content="2025-02-18">
+<meta name="description" content="Analysis of FBI crime data API from TidyTuesday">
 
-<title>Ethics: Data and Power – Rhyan Goozh</title>
+<title>FBI Crime Data – Rhyan Goozh</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -119,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Permutation Tests</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Project4.html" aria-current="page"> 
+    <a class="nav-link" href="./Project4.html"> 
 <span class="menu-text">Ethics: Data and Power</span></a>
   </li>  
   <li class="nav-item">
@@ -129,10 +163,6 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="./Resume.html"> 
 <span class="menu-text">Resume</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./Finalpresentation.html"> 
-<span class="menu-text">Application of My Webite</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -145,33 +175,20 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#personalized-ads-and-ethical-dilemmas-tiktoks-use-of-behavioral-data" id="toc-personalized-ads-and-ethical-dilemmas-tiktoks-use-of-behavioral-data" class="nav-link active" data-scroll-target="#personalized-ads-and-ethical-dilemmas-tiktoks-use-of-behavioral-data">Personalized Ads and Ethical Dilemmas: TikTok’s Use of Behavioral Data</a>
-  <ul class="collapse">
-  <li><a href="#informed-consent-and-the-illusion-of-control" id="toc-informed-consent-and-the-illusion-of-control" class="nav-link" data-scroll-target="#informed-consent-and-the-illusion-of-control">1. Informed Consent and the Illusion of Control</a></li>
-  <li><a href="#identifiability-and-the-risk-of-re-identification" id="toc-identifiability-and-the-risk-of-re-identification" class="nav-link" data-scroll-target="#identifiability-and-the-risk-of-re-identification">2. Identifiability and the Risk of Re-Identification</a></li>
-  <li><a href="#unintended-and-harmful-uses-of-data" id="toc-unintended-and-harmful-uses-of-data" class="nav-link" data-scroll-target="#unintended-and-harmful-uses-of-data">3. Unintended and Harmful Uses of Data</a></li>
-  <li><a href="#inferred-demographics-and-proxy-discrimination" id="toc-inferred-demographics-and-proxy-discrimination" class="nav-link" data-scroll-target="#inferred-demographics-and-proxy-discrimination">4. Inferred Demographics and Proxy Discrimination</a></li>
-  </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Ethics: Data and Power</h1>
+<h1 class="title">FBI Crime Data</h1>
 </div>
 
 <div>
   <div class="description">
-    <p>TikTok Ethics Project: Behavioral Data and Personalization</p>
+    <p>Analysis of FBI crime data API from TidyTuesday</p>
   </div>
 </div>
 
@@ -188,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 14, 2025</p>
+      <p class="date">February 18, 2025</p>
     </div>
   </div>
   
@@ -200,42 +217,51 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="personalized-ads-and-ethical-dilemmas-tiktoks-use-of-behavioral-data" class="level2">
-<h2 class="anchored" data-anchor-id="personalized-ads-and-ethical-dilemmas-tiktoks-use-of-behavioral-data">Personalized Ads and Ethical Dilemmas: TikTok’s Use of Behavioral Data</h2>
-<p>TikTok’s popularity is driven in part by its ability to show users hyper-personalized content and advertisements through machine learning algorithms. These algorithms analyze behavioral data such as watch time, likes, replays, and comments to create a “For You” feed and deliver targeted ads. Behind the scenes, this involves extensive user profiling, predictive modeling, and the inference of demographic characteristics such as gender and age. While TikTok does not always collect demographic data directly, public documentation like the 2021 Privacy Policy suggests that behavioral signals are used to estimate user traits—though the specific methods are not fully disclosed.</p>
-<p>This process raises several ethical concerns. How much do users actually consent to? Is the data really anonymous? Can inferred attributes lead to discrimination? This project explores four key ethical dilemmas embedded in TikTok’s data practices.</p>
-<section id="informed-consent-and-the-illusion-of-control" class="level3">
-<h3 class="anchored" data-anchor-id="informed-consent-and-the-illusion-of-control">1. Informed Consent and the Illusion of Control</h3>
-<p>One of the central issues is whether users have meaningfully consented to TikTok’s data collection and use. As Barocas &amp; Nissenbaum (2009) explain, the typical “notice and consent” model fails to provide genuine understanding of how data will be used—especially when future uses are unclear or hidden behind complex policy language. TikTok’s 2021 Privacy Policy describes the collection of behavioral data for purposes like improving services and targeting ads. However, it does not clearly outline the full extent of personalization or profiling algorithms used to infer user characteristics, nor the third parties involved in data sharing (TikTok, 2021). Given the opacity of these systems and how often users accept terms without reading them, true informed consent is likely not possible. Furthermore, as Barocas &amp; Nissenbaum also point out, app design often includes dark patterns—subtle design tricks that nudge users to accept permissions without realizing their implications. This raises the question: can users really opt out of a system that is designed to obscure their choices?</p>
-<p>It is also worth considering that TikTok likely views “improving services” as a broad umbrella under which profiling algorithms are deployed. This raises an ethical issue not only of transparency but also of whether users even have a clear understanding of the actual consequences of consenting to such data collection, particularly when the systems are so complex and opaque. It is possible that the “improving services” language conceals the more intrusive aspects of TikTok’s data practices, such as the detailed profiling algorithms it uses for ad targeting.</p>
-</section>
-<section id="identifiability-and-the-risk-of-re-identification" class="level3">
-<h3 class="anchored" data-anchor-id="identifiability-and-the-risk-of-re-identification">2. Identifiability and the Risk of Re-Identification</h3>
-<p>TikTok claims that some of its data is anonymized or aggregated, but this doesn’t guarantee privacy. According to Leetaru (2016), even supposedly anonymous data can often be re-identified when combined with other data sources, a process known as “mosaicking.” For example, details like location, usage patterns, and device metadata can often be linked back to individuals, especially when tied to inferred demographic profiles. If TikTok uses behavioral cues to infer traits like age or gender and combines them with device identifiers or app usage metadata, the risk of re-identification becomes real. This is especially troubling for users who believe their data is anonymous when, in fact, it may still expose them to targeting or profiling.</p>
-<p>This risk becomes even more critical if TikTok shares this data with third parties or if there is a data breach. However, if the data were only used in-house, the likelihood of this re-identification risk might be reduced, though it would still depend on the robustness of TikTok’s internal privacy protections and the degree to which the data is effectively anonymized. Even without data being shared externally, the company’s ability to re-identify users based on aggregated data highlights significant privacy concerns, especially as this anonymized data may still be leveraged for highly specific ad targeting.</p>
-</section>
-<section id="unintended-and-harmful-uses-of-data" class="level3">
-<h3 class="anchored" data-anchor-id="unintended-and-harmful-uses-of-data">3. Unintended and Harmful Uses of Data</h3>
-<p>TikTok’s algorithms may also use behavioral data in ways that were not explicitly stated in its policies, leading to unintended consequences. For example, content engagement patterns can be used to infer when users are feeling vulnerable or emotionally unstable—data that advertisers or recommendation engines could exploit. This creates ethical concerns, especially for younger users or those struggling with mental health. As Barocas &amp; Nissenbaum (2009) warn, data collected for one purpose may be repurposed for another, potentially harming users who were unaware of such risks. When TikTok’s algorithm detects that a user is binge-watching certain types of content (e.g., related to body image or depression), it may double down and promote similar content, potentially reinforcing harmful behavior. This scenario reflects how data can be used in unintended, damaging ways that affect both individuals and communities.</p>
-<p>If TikTok’s data is used only in-house, it might mitigate some of the risks of exploitation, but it does not fully address the ethical concern that the data might still lead to harm by inadvertently reinforcing negative behaviors. The algorithms themselves, especially in their reliance on user behavior, can cause undue influence by continually promoting content that could further exploit or exacerbate the emotional states of users. The unintended consequences of such a feedback loop could perpetuate harmful patterns, particularly if vulnerable users are continuously exposed to content that reinforces negative body image, mental health struggles, or other damaging behaviors.</p>
-</section>
-<section id="inferred-demographics-and-proxy-discrimination" class="level3">
-<h3 class="anchored" data-anchor-id="inferred-demographics-and-proxy-discrimination">4. Inferred Demographics and Proxy Discrimination</h3>
-<p>TikTok does not ask users for race or gender directly, but it still infers these attributes using behavioral patterns, language, and possibly facial features from videos—though TikTok has not publicly confirmed all technical details. This practice aligns with Buolamwini &amp; Gebru’s (2018) work on algorithmic bias, which shows how demographic inferences can lead to discriminatory outcomes—especially when training data is not representative or when inferred demographics become proxies for exclusion. If TikTok’s ad system uses inferred gender or race to determine who sees certain ads or content, this could result in proxy discrimination. For example, an advertiser may unintentionally exclude users that the algorithm identifies as “less profitable” based on biased inferences. The ethical dilemma here is not just whether race or gender should be used—but whether the algorithm is replicating or reinforcing social inequalities through proxies it was never explicitly told to use.</p>
-<p>Even if TikTok does not directly collect demographic information, the algorithms’ ability to infer characteristics like gender and race may still create opportunities for proxy discrimination that disproportionately affects marginalized groups. If the algorithms reinforce biases or make assumptions based on incomplete data, it could lead to biased ad targeting, limiting users’ access to certain products or services based on demographic assumptions that might not even be accurate. This further complicates the ethical landscape, as the platform’s data-driven decisions could inadvertently perpetuate inequality in ways that are difficult for users to challenge or even recognize.</p>
-</section>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<ul>
-<li><p>Barocas, S., &amp; Nissenbaum, H. (2009). <em>On Notice: The Trouble with Notice and Consent</em>. In Proceedings of the Engaging Data Forum: The First International Forum on the Application and Management of Personal Electronic Information.</p></li>
-<li><p>Buolamwini, J., &amp; Gebru, T. (2018). <em>Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification</em>. Proceedings of Machine Learning Research: 81, 77–91.</p></li>
-<li><p>Leetaru, K. (2016). <em>The Big Data Era of Mosaicked Deidentification: Can We Anonymize Data Anymore?</em> Forbes. <a href="https://www.forbes.com/sites/kalevleetaru/2016/09/26/the-big-data-era-of-mosaicked-deidentification-can-we-anonymize-data-anymore/" class="uri">https://www.forbes.com/sites/kalevleetaru/2016/09/26/the-big-data-era-of-mosaicked-deidentification-can-we-anonymize-data-anymore/</a></p></li>
-<li><p>TikTok. (2021). <em>Privacy Policy</em>. <a href="https://www.tiktok.com/legal/privacy-policy" class="uri">https://www.tiktok.com/legal/privacy-policy</a></p></li>
-</ul>
+<p>In this project, I analyze agency level crime data across all 50 states using the Tidy Tuesday <em>Agencies From the FBI Crime Data</em> <em>API</em> data set. The data set provides detailed information on law enforcement agencies across all 50 states that have submitted data to the FBI’s Uniform Crime Reporting (UCR) program and are displayed on the Crime Data Explorer (CDE). This data set is ideal for exploring trends and understanding the fluidity in crime.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing data sets I will analyze </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="st">'2025-02-18'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>agencies <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>agencies</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot visualization of the distribution of law enforcement agencies by state and agency type </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytuesdayR)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>agencies <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(state, agency_type) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> state, <span class="at">y =</span> n, <span class="at">color =</span> agency_type)) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"State"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of Agencies"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Law Enforcement Agencies by State and Type"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Agency Type"</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FBICrimeData_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here I created a scatterplot that visualizes the distribution of law enforcement agencies by state and agency type. The x-axis represents the states, while the y-axis displays the number of agencies in each state. Different colors represent different agency types.</p>
+<p>This visualization helps identify variations in agency distribution across states and highlights trends in the presence of different law enforcement agency types. It can be useful for understanding the allocation of law enforcement resources and regional differences in agency structures.</p>
+<p><strong>Data Source:</strong></p>
+<p><a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2025/2025-02-18/agencies.csv" class="uri">https://github.com/rfordatascience/tidytuesday/blob/master/data/2025/2025-02-18/agencies.csv</a> Original FBI data sourced from the <strong><a href="https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/docApi">FBI Crime Data Explorer API Documentation</a></strong></p>
+<p><strong>Author:</strong> TidyTuesday Project</p>
+<p>This dataset was sourced from the TidyTuesday project, which provides weekly data challenges for the R community. The underlying data originates from the FBI’s Crime Data Explorer (CDE) API, which includes detailed information on law enforcement agencies across the U.S.:</p>
+<p>- The dataset was last committed on February 18, 2025.</p>
+<p>- It includes details on agencies that have submitted data to the FBI’s Uniform Crime Reporting (UCR) Program.</p>
+<p>- The dataset provides insights into agency types, geographic distribution, and NIBRS participation.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
