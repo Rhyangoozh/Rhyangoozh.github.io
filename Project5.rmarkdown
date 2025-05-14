@@ -10,9 +10,15 @@ execute:
   warning: false
   message: false
 ---
+
+
+
 ## Introduction
 
 This project explores how traffic stop outcomes vary by race and gender across California, Texas, and North Carolina. Using the Stanford Open Policing Project SQL database, we query traffic stop data from California, Texas, and North Carolina to identify potential disparities in stop outcomes such as arrests, searches, or warnings. Our analysis includes grouped summaries and visualizations to highlight trends and differences across the states.
+
+
+
 
 ```{r}
 # Connecting to the Traffic Database
@@ -27,12 +33,24 @@ con_traffic <- DBI::dbConnect(
 )
 ```
 
+
+
+
 ## Table Previews
+
+
+
 
 ```{sql, connection=con_traffic}
 SHOW TABLES;
 ```
+
+
+
 Before diving into the analysis, it's helpful to understand what data is available in the database. The code above lists all 88 tables in the connected traffic database. Each row corresponds to a specific location and date of traffic stop data.
+
+
+
 
 ```{sql, connection=con_traffic}
 SELECT * FROM ca_statewide_2023_01_26 LIMIT 5;
@@ -46,60 +64,90 @@ SELECT * FROM tx_statewide_2020_04_01 LIMIT 5;
 SELECT * FROM nc_statewide_2020_04_01 LIMIT 5;
 ```
 
+
+
+
 To better understand the structure of the data sets, I analyzed outcomes from the California, Texas, and North Carolina statewide traffic stop tables. The California data (ca_statewide_2023_01_26) includes details such as race, sex, department name, violation type, and search outcomes. The Texas data (tx_statewide_2020_04_01) adds route-level location data, officer ID hashes, and extensive fields on vehicle and contraband information. The North Carolina table (nc_statewide_2020_04_01) also includes age, reasons for stops, and actions taken. These previews help establish the scope and depth of available variables across different states.
 
 ## Checking for Missing Values
 
 To better understand the quality and usability of the data, I first checked for missing values in the key data sets I am focusing on. This step helps identify any gaps that could affect the accuracy of analysis or require data cleaning. Below, I show how many entries are missing in select columns of each data set. For clarity, each number represents the count of missing values in that specific variable.
 
+
+
+
 ```{sql, connection=con_traffic}
 -- Check missing subject_race in CA
 SELECT COUNT(*) FROM ca_statewide_2023_01_26 WHERE subject_race IS NULL;
 ```
+
 ```{sql, connection=con_traffic}
 -- Check missing subject_sex in CA
 SELECT COUNT(*) FROM ca_statewide_2023_01_26 WHERE subject_sex IS NULL;
 ```
+
 ```{sql, connection=con_traffic}
 -- Check missing outcome in CA
 SELECT COUNT(*) FROM ca_statewide_2023_01_26 WHERE outcome IS NULL;
 ```
+
+
+
 California Missing Values:
 There is 1 missing value for subject_race, suggesting almost complete data in this category. The subject_sex field has 96 missing values, which is still minimal relative to the dataset size. However, the outcome variable is missing in 9,588,775 records, indicating a severe gap in outcome reporting that could significantly limit analysis and raise questions about data collection methods or system design.
+
+
+
 
 ```{sql, connection=con_traffic}
 -- Check missing subject_race in TX
 SELECT COUNT(*) FROM tx_statewide_2020_04_01 WHERE subject_race IS NULL;
 ```
+
 ```{sql, connection=con_traffic}
 -- Check missing subject_sex in TX
 SELECT COUNT(*) FROM tx_statewide_2020_04_01 WHERE subject_sex IS NULL;
 ```
+
 ```{sql, connection=con_traffic}
 -- Check missing outcome in TX
 SELECT COUNT(*) FROM tx_statewide_2020_04_01 WHERE outcome IS NULL;
 ```
+
+
+
 Texas Missing Values:
 The dataset shows 352 missing values for subject_race and 436 missing values for subject_sex, which are relatively small proportions and suggest generally good data quality for these variables. There are 2,357 missing values for outcome, a non-negligible amount that should be noted in any evaluation of the dataset’s completeness.
+
+
+
 
 ```{sql, connection=con_traffic}
 -- Check missing subject_race in NC
 SELECT COUNT(*) FROM nc_statewide_2020_04_01 WHERE subject_race IS NULL;
 ```
+
 ```{sql, connection=con_traffic}
 -- Check missing subject_sex in NC
 SELECT COUNT(*) FROM nc_statewide_2020_04_01 WHERE subject_sex IS NULL;
 ```
+
 ```{sql, connection=con_traffic}
 -- Check missing outcome in NC
 SELECT COUNT(*) FROM nc_statewide_2020_04_01 WHERE outcome IS NULL;
 ```
+
+
+
 North Carolina Missing Values:
 Both subject_race and subject_sex have 18 missing values each, reflecting strong consistency in demographic reporting. On the other hand, 605,059 records are missing outcome values, which could meaningfully affect any modeling or statistical inference relying on outcomes and highlights the importance of addressing or accounting for this missingness.
 
 ## SQL Table Queries 
 # Stop Outcomes by Race and Gender in CA, TX, and NC
 In this section, I examine the outcomes of traffic stops across California, Texas, and North Carolina, broken down by race and gender. The outcome variable refers to the result of the stop—for example, whether the individual received a citation, a warning, or was arrested. By grouping this data by state, race, and gender, we can begin to identify any notable patterns or disparities in how different groups experience traffic stops.
+
+
+
 
 ```{sql, connection=con_traffic}
 -- Query 1: CA outcomes by race and gender
@@ -150,7 +198,13 @@ ORDER BY count DESC
 ```
 
 
+
+
+
 ## Load Data into R from SQL Queries
+
+
+
 
 ```{r}
 # Query CA results
@@ -202,7 +256,13 @@ nc_data <- DBI::dbGetQuery(con_traffic, "
 ")
 ```
 
+
+
+
 ## Combine States Data
+
+
+
 
 ```{r}
 # Combine the data from CA, TX, and NC
@@ -217,7 +277,13 @@ combined_data <- combined_data %>%
   )
 ```
 
+
+
+
 ## Two Well Labled Plots
+
+
+
 
 ```{r}
 # First Plot: Traffic stop outcomes by race across the states
@@ -245,7 +311,13 @@ ggplot(race_summary, aes(x = subject_race, y = total_stops, fill = state)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
+
+
+
 The bar chart compares the number of traffic stops by race across California, North Carolina, and Texas. Across all three states, White drivers experienced the highest number of stops, followed by Hispanic and Black drivers. There is a substantial drop-off in the number of stops for drivers categorized as Asian/Pacific Islander, "Other," and "Unknown," indicating that stops are heavily concentrated among a few racial groups. Texas is leading in the number of stops for White, Hispanic, and Unknown drivers. North Carolina shows a particularly high number of stops for Black drivers compared to California and Texas.
+
+
+
 
 ```{r}
 # Second Plot: Traffic stop outcomes by gender across the states
@@ -267,6 +339,9 @@ ggplot(gender_summary, aes(x = subject_sex, y = total_stops, fill = state)) +
   ) +
   theme_minimal()
 ```
+
+
+
 This plot shows traffic stops by gender across California, North Carolina, and Texas. Male drivers account for a noticeably higher number of stops in each state compared to female drivers. The gap between male and female stops is consistent, but Texas records a particularly large number of male stops relative to the other two states. California has about 5 million more male stops than North Carolina but the number of stop for women between the two states is relatively the same. Overall, gender appears to be a significant factor in the frequency of traffic stops.
 
 ## Insights
@@ -277,6 +352,9 @@ This analysis shows that the frequency and type of traffic stop outcomes (e.g., 
 ## Reference
 
 Pierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10.
+
+
+
 
 ```{r}
 DBI::dbDisconnect(con_traffic)
